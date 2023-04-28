@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const DoctorShema = new Shema({
+const DoctorShema = new Schema({
   id: Schema.Types.UUID,
   name: String,
   spec: String,

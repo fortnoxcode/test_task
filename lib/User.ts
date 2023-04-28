@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const UserShema = new Shema({
+const UserShema = new Schema({
   id: Schema.Types.UUID,
   phone: String,
   name: String,
