@@ -1,0 +1,29 @@
+{
+  "name": "test_task",
+  "version": "1.0.0",
+  "author": "fortnoxcode",
+  "scripts": {
+    "build": "tsc --project tsconfig.eslint.json",
+    "start": "yarn build && node ./build/index.js",
+    "dev": "nodemon",
+    "lint": "eslint"
+  },
+  "description": "test_task",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "devDependencies": {
+    "@types/node": "18.11.18",
+    "@typescript-eslint/eslint-plugin": "5.47.1",
+    "@typescript-eslint/parser": "5.47.1",
+    "eslint": "8.2.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript": "17.0.0",
+    "eslint-plugin-import": "2.25.2",
+    "nodemon": "2.0.20",
+    "typescript": "4.9.4"
+  },
+  "dependencies": {
+    "fastify": "^4.17.0",
+    "mongoose": "^7.1.0"
+  }
+}
