@@ -10,6 +10,7 @@
   },
   "description": "test_task",
   "main": "index.js",
+  "type": "module",
   "types": "index.d.ts",
   "devDependencies": {
     "@types/node": "18.11.18",
@@ -23,6 +24,8 @@
     "typescript": "4.9.4"
   },
   "dependencies": {
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.8.1",
     "fastify": "^4.17.0",
     "mongoose": "^7.1.0"
   }

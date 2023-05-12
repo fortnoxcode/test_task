@@ -1,42 +1,46 @@
-import fastify, { RouteShorthandOptions, FastifyRequest } from 'fastify';
+import fastify from 'fastify';
+import * as swagger from '@fastify/swagger';
+import * as swaggerUI from '@fastify/swagger-ui';
+import { addNewDocSchema, AppointmentSchema, addNewUserSchema } from './api/shemas.js';
+import { addDoctor, regNewUser, addAppointment } from './api/index.js';
 
 const server = fastify();
 
-server.get('/', async (req, res) => {
-  res.send('Hello world');
+await server.register(swagger, {
+  swagger: {
+    info: {
+      title: 'appointments-service',
+      version: '1.0.0',
+    },
+    host: 'localhost:8080',
+    schemes: ['http'],
+    consumes: ['application/json'],
+    produces: ['application/json'],
+  },
 });
 
-const AppointmentSchema: RouteShorthandOptions = {
-  schema: {
-    body: {
-      type: 'object',
-      properties: {
-        user_id: {
-          type: 'string',
-          format: 'uuid',
-        },
-        doctor_id: {
-          type: 'string',
-          format: 'uuid',
-        },
-        date_time: {
-          type: 'string',
-          pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}$',
-        },
-      },
-      required: ['user_id', 'doctor_id', 'date_time'],
-    },
+await server.register(swaggerUI, {
+  routePrefix: '/docs',
+  uiConfig: {
+    docExpansion: 'full',
+    deepLinking: false,
   },
-};
+  staticCSP: true,
+  transformSpecificationClone: true,
+});
 
-interface BodyType {
-  user_id: string;
-  doctor_id: string;
-  date_time: string;
-}
+server.post('/regdoc', addNewDocSchema, addDoctor);
 
-server.post('/', AppointmentSchema, async (request: FastifyRequest<{ Body: BodyType }>, response) => {
-  const { user_id, doctor_id, date_time } = request.body;
+server.post('/reguser', addNewUserSchema, regNewUser);
+
+server.post('/', AppointmentSchema, addAppointment);
+
+server.ready((err) => {
+  if (err) {
+    throw err;
+  }
+
+  server.swagger();
 });
 
 server.listen({ port: 8080, host: '0.0.0.0' }, (err, address) => {

@@ -1,12 +1,24 @@
 version: '3.7'
-
 services:
-
+  server:
+    build: .
+    environment:
+      db: mongodb://admin:admin@localhost:27017
+      port: 8080
+      host: 0.0.0.0
+    ports:
+      - 8080:8080
+    container_name: appointment-api
+    restart: always
+    working_dir: /usr/src/app
+    depends_on:
+      - mongo
   mongo:
     image: mongo
     restart: always
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: mainDB
